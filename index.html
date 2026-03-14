@@ -1,578 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>Vexa Debate</title>
-<meta name="theme-color" content="#050505">
-<meta name="apple-mobile-web-app-status-bar-style" content="#050505">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-:root{
---bg:#080808;
---border:#1a1a1a;
---border-bright:#2a2a2a;
---text:#e8e8e8;
---muted:#444;
---a-line:#1a3a1a;
---b-line:#3a1a1a;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{
-background:var(--bg);
-color:var(--text);
-font-family:'IBM Plex Mono',monospace;
-font-size:13px;
-display:flex;
-flex-direction:column;
-align-items:center;
-padding:3rem 1.2rem;
-min-height:100vh;
-}
-.wordmark{
-font-size:9px;
-letter-spacing:.35em;
-text-transform:uppercase;
-color:var(--muted);
-margin-bottom:2.5rem
-}
-.wrap{width:100%;max-width:540px;position:relative}
-.input{
-width:100%;
-border:none;
-border-bottom:1px solid var(--border-bright);
-background:transparent;
-color:var(--text);
-font-family:'IBM Plex Mono',monospace;
-padding:.45rem 0;
-margin-bottom:1.1rem;
-outline:none
-}
-.row{display:flex;gap:.7rem;flex-wrap:wrap;margin-bottom:1.2rem;position:relative}
-.button{
-background:none;
-border:none;
-font-family:'IBM Plex Mono',monospace;
-font-size:9px;
-letter-spacing:.28em;
-text-transform:uppercase;
-cursor:pointer;
-color:var(--text)
-}
-.button:disabled{opacity:.2;cursor:default}
-.sep{color:#2a2a2a}
-.selector{
-font-size:12px;
-color:var(--text);
-cursor:pointer;
-display:inline-flex;
-gap:.4rem;
-align-items:center;
-user-select:none
-}
-.dropdown{
-position:absolute;
-top:1.8rem;
-background:#080808;
-border:1px solid var(--border);
-display:none;
-flex-direction:column;
-min-width:150px;
-z-index:10
-}
-.dropdown div{
-padding:.35rem .6rem;
-font-size:12px;
-color:var(--muted);
-cursor:pointer
-}
-.dropdown div:hover{color:var(--text)}
-#chatWrap{
-width:100%;
-max-height:60vh;
-overflow-y:auto;
-scroll-behavior:smooth;
-margin-top:1rem;
-padding-bottom:2rem;
-}
-#chat{
-display:flex;
-flex-direction:column
-}
-@keyframes slideIn{
-from{opacity:0;transform:translateY(10px)}
-to{opacity:1;transform:translateY(0)}
-}
-.msg{
-padding:.7rem 0;
-border-bottom:1px solid var(--border);
-animation:slideIn 0.3s ease-out;
-}
-.msg-a{
-padding-left:.8rem;
-border-left:2px solid var(--a-line);
-margin-right:4rem
-}
-.msg-b{
-padding-right:.8rem;
-border-right:2px solid var(--b-line);
-margin-left:4rem;
-text-align:right
-}
-.name{
-font-size:8px;
-letter-spacing:.22em;
-text-transform:uppercase;
-color:var(--muted);
-margin-bottom:.15rem
-}
-.round{
-font-size:9px;
-letter-spacing:.2em;
-color:var(--muted);
-margin:.5rem 0;
-text-align:center;
-}
-.typing{
-padding:.6rem 0;
-display:flex;
-gap:3px;
-animation:slideIn 0.3s ease-out;
-}
-.dot{
-width:3px;
-height:3px;
-background:var(--muted);
-border-radius:50%;
-animation:blink 1s infinite
-}
-.dot:nth-child(2){animation-delay:.2s}
-.dot:nth-child(3){animation-delay:.4s}
-@keyframes blink{0%,80%,100%{opacity:.2}40%{opacity:.8}}
-.status{
-margin-top:1.4rem;
-font-size:8px;
-letter-spacing:.2em;
-text-transform:uppercase;
-color:var(--muted)
-}
-#customWrap{width:100%;margin-bottom:1rem}
-#inputBar{
-display:none;
-position:fixed;
-bottom:0;
-left:0;
-width:100%;
-background:#080808;
-border-top:1px solid #1a1a1a;
-padding:10px;
-padding-bottom:max(10px, env(safe-area-inset-bottom));
-z-index:100;
-}
-.input-wrap{max-width:540px;margin:0 auto;display:flex;gap:10px}
-.human-input{
-flex:1;
-background:transparent;
-border:1px solid #2a2a2a;
-color:#e8e8e8;
-font-family:'IBM Plex Mono',monospace;
-padding:8px;
-outline:none;
-border-radius:0;
-}
-.action-btn{
-border:1px solid #2a2a2a;
-padding:0 15px;
-background:transparent;
-color:var(--text);
-cursor:pointer;
-font-family:'IBM Plex Mono',monospace;
-font-size:9px;
-letter-spacing:.2em;
-text-transform:uppercase;
-}
-#sentimentWrap{
-width:100%;
-height:4px;
-background:var(--b-line);
-margin-top:1rem;
-display:none;
-position:relative;
-}
-#sentimentFill{
-height:100%;
-width:50%;
-background:var(--a-line);
-transition:width 0.5s ease;
-}
-#chaosBtn{
-display:none;
-margin-top:1rem;
-color:#e74c3c;
-border-color:#3a1a1a;
-}
-#exportBtn{
-display:none;
-margin-top:1rem;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <title>Vexa Debate</title>
+    <meta name="theme-color" content="#050505">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#050505">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styling/index.css">
+    <link rel="icon" href="/images/icon-rounded.png" type="image/png">
+
+    <meta name="description" content="Vexa Debate, a debate AI that creates arguments for you">
+    <meta property="og:description" content="Vexa Debate, a debate AI that creates arguments for you">
+    <meta property="twitter:description" content="Vexa Debate, a debate AI that creates arguments for you">
+
+    <meta property="og:image" content="/images/banner.png">
+    <meta property="twitter:image" content="/images/banner.png">
+
 </head>
+
 <body>
-<div class="wordmark">Vexa Debate</div>
-<div class="wrap">
-    <input class="input" id="topic" placeholder="enter topic">
-    <div class="row">
-        <div class="selector" id="styleBtn">style ▾</div>
-        <div class="dropdown" id="styleMenu">
-            <div data-style="casual">casual</div>
-            <div data-style="logic">logical</div>
-            <div data-style="philosophical">philosophical</div>
-            <div data-style="sarcastic">sarcastic</div>
-            <div data-style="internet">internet</div>
-            <div data-style="custom">custom</div>
+    <div class="wordmark">Vexa Debate</div>
+    <div class="wrap">
+        <input class="input" id="topic" placeholder="enter topic">
+        <div class="row">
+            <div class="selector" id="styleBtn">style ▾</div>
+            <div class="dropdown" id="styleMenu">
+                <div data-style="casual">casual</div>
+                <div data-style="logic">logical</div>
+                <div data-style="philosophical">philosophical</div>
+                <div data-style="sarcastic">sarcastic</div>
+                <div data-style="internet">internet</div>
+                <div data-style="custom">custom</div>
+            </div>
+            <div class="selector" id="modeBtn">mode ▾</div>
+            <div class="dropdown" id="modeMenu">
+                <div data-mode="ai-ai">AI vs AI</div>
+                <div data-mode="human-ai">Human vs AI</div>
+            </div>
+            <div class="selector" id="lengthBtn">length ▾</div>
+            <div class="dropdown" id="lengthMenu">
+                <div data-length="short">short</div>
+                <div data-length="medium">medium</div>
+                <div data-length="long">long</div>
+            </div>
+            <div class="selector" id="judgeBtn">judge ▾</div>
+            <div class="dropdown" id="judgeMenu">
+                <div data-judge="neutral">neutral</div>
+                <div data-judge="strict">strict logic</div>
+                <div data-judge="troll">internet troll</div>
+                <div data-judge="supreme">supreme court</div>
+            </div>
         </div>
-        <div class="selector" id="modeBtn">mode ▾</div>
-        <div class="dropdown" id="modeMenu">
-            <div data-mode="ai-ai">AI vs AI</div>
-            <div data-mode="human-ai">Human vs AI</div>
+
+        <div class="row" id="customWrap" style="display:none">
+            <input class="input" id="customStyle" placeholder="describe custom style">
         </div>
-        <div class="selector" id="lengthBtn">length ▾</div>
-        <div class="dropdown" id="lengthMenu">
-            <div data-length="short">short</div>
-            <div data-length="medium">medium</div>
-            <div data-length="long">long</div>
+
+        <div class="row">
+            <button class="button" id="random">random</button>
+            <span class="sep">/</span>
+            <button class="button" id="start">start</button>
+            <span class="sep">/</span>
+            <button class="button" id="stop" disabled>stop</button>
         </div>
-        <div class="selector" id="judgeBtn">judge ▾</div>
-        <div class="dropdown" id="judgeMenu">
-            <div data-judge="neutral">neutral</div>
-            <div data-judge="strict">strict logic</div>
-            <div data-judge="troll">internet troll</div>
-            <div data-judge="supreme">supreme court</div>
+
+        <div id="sentimentWrap">
+            <div id="sentimentFill"></div>
+        </div>
+
+        <div id="chatWrap">
+            <div id="chat"></div>
+        </div>
+
+        <div class="row">
+            <button class="action-btn" id="chaosBtn">Toss Grenade</button>
+            <button class="action-btn" id="exportBtn">Export Transcript</button>
+        </div>
+
+        <div class="status" id="status">ready</div>
+    </div>
+
+    <div id="inputBar">
+        <div class="input-wrap">
+            <input type="text" id="humanInput" class="human-input" placeholder="Type your argument...">
+            <button id="sendBtn" class="action-btn">SEND</button>
         </div>
     </div>
-    
-    <div class="row" id="customWrap" style="display:none">
-        <input class="input" id="customStyle" placeholder="describe custom style">
-    </div>
 
-    <div class="row">
-        <button class="button" id="random">random</button>
-        <span class="sep">/</span>
-        <button class="button" id="start">start</button>
-        <span class="sep">/</span>
-        <button class="button" id="stop" disabled>stop</button>
-    </div>
-
-    <div id="sentimentWrap">
-        <div id="sentimentFill"></div>
-    </div>
-
-    <div id="chatWrap">
-        <div id="chat"></div>
-    </div>
-    
-    <div class="row">
-        <button class="action-btn" id="chaosBtn">Toss Grenade</button>
-        <button class="action-btn" id="exportBtn">Export Transcript</button>
-    </div>
-
-    <div class="status" id="status">ready</div>
-    <div style="height: 80px;"></div>
-</div>
-
-<div id="inputBar">
-    <div class="input-wrap">
-        <input type="text" id="humanInput" class="human-input" placeholder="Type your argument...">
-        <button id="sendBtn" class="action-btn">SEND</button>
-    </div>
-</div>
-
-<script>
-const API = "https://vexa-ai.vercel.app"
-const topicInput = document.getElementById("topic")
-const startBtn = document.getElementById("start")
-const stopBtn = document.getElementById("stop")
-const randomBtn = document.getElementById("random")
-const chat = document.getElementById("chat")
-const chatWrap = document.getElementById("chatWrap")
-const statusEl = document.getElementById("status")
-const styleBtn = document.getElementById("styleBtn")
-const styleMenu = document.getElementById("styleMenu")
-const modeBtn = document.getElementById("modeBtn")
-const modeMenu = document.getElementById("modeMenu")
-const lengthBtn = document.getElementById("lengthBtn")
-const lengthMenu = document.getElementById("lengthMenu")
-const judgeBtn = document.getElementById("judgeBtn")
-const judgeMenu = document.getElementById("judgeMenu")
-const customWrap = document.getElementById("customWrap")
-const customStyle = document.getElementById("customStyle")
-const inputBar = document.getElementById("inputBar")
-const humanInputField = document.getElementById("humanInput")
-const sendBtn = document.getElementById("sendBtn")
-const sentimentWrap = document.getElementById("sentimentWrap")
-const sentimentFill = document.getElementById("sentimentFill")
-const chaosBtn = document.getElementById("chaosBtn")
-const exportBtn = document.getElementById("exportBtn")
-
-let style = "casual", mode = "ai-ai", length = "medium", judge = "neutral", running = false, exchanges = 0
-let abortController = null
-const LENGTHS = { short: 6, medium: 10, long: 12 }
-const STYLES = {
-    casual: "casual argument with real points",
-    logic: "logical debate with reasoning",
-    philosophical: "philosophical discussion",
-    sarcastic: "sarcastic debate still making points",
-    internet: "internet comment style debate"
-}
-const JUDGES = {
-    neutral: "neutral impartial judge",
-    strict: "strict logic professor",
-    troll: "chaotic internet troll",
-    supreme: "supreme court justice"
-}
-
-let histA = [], histB = [], history = []
-
-function clean(t) { return t.replace(/\[model:[^\]]*\]/gi, "").replace(/[*_`>#~\-]/g, "").trim() }
-
-function addMsg(side, text, round) {
-    if (!running && side !== 'judge') return
-    const el = document.createElement("div")
-    if (round) {
-        const r = document.createElement("div")
-        r.className = "round"
-        r.textContent = round
-        chat.appendChild(r)
-    }
-    el.className = "msg msg-" + side
-    el.innerHTML = '<div class="name">' + (side === 'a' ? 'PRO' : (side === 'b' ? 'CON' : 'SYSTEM')) + '</div>' + clean(text)
-    chat.appendChild(el)
-    chatWrap.scrollTop = chatWrap.scrollHeight
-}
-
-function addTyping() {
-    const el = document.createElement("div")
-    el.id = "typing"
-    el.className = "typing"
-    el.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>'
-    chat.appendChild(el)
-    chatWrap.scrollTop = chatWrap.scrollHeight
-}
-
-function removeTyping() { const t = document.getElementById("typing"); if (t) t.remove() }
-
-async function call(messages) {
-    while (running) {
-        for (const m of ["toolbaz-v4.5-fast", "gemini-2.5-flash", "gpt-4o-mini"]) {
-            try {
-                const r = await fetch(API + "/chat", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ model: m, messages }),
-                    signal: abortController.signal
-                })
-                const d = await r.json()
-                const txt = d.message?.content || d.text || d.content
-                if (txt) return clean(txt)
-            } catch (e) {
-                if (e.name === 'AbortError') return null
-            }
-        }
-        await new Promise(r => setTimeout(r, 1500))
-    }
-    return null
-}
-
-async function randomTopic() {
-    statusEl.textContent = "generating topic..."
-    abortController = new AbortController()
-    running = true
-    const t = await call([{ role: "user", content: "generate one short controversial debate topic. return only the topic." }])
-    running = false
-    if (t) topicInput.value = t
-    statusEl.textContent = "ready"
-}
-
-function roundLabel(i) {
-    const total = LENGTHS[length]
-    if (i === 0) return "Opening Statement"
-    if (i >= total - 1) return "Closing Argument"
-    return "Rebuttal " + Math.floor(i / 2 + 1)
-}
-
-async function updateSentiment() {
-    if (!running) return
-    const prompt = "Evaluate this debate. Output ONLY a number from 0 to 100 representing PRO's winning percentage (50 is tie).\n" + history.join("\n")
-    const tempHist = [{ role: "user", content: prompt }]
-    const res = await call(tempHist)
-    if (res) {
-        const num = parseInt(res.replace(/\D/g, ''))
-        if (!isNaN(num) && num >= 0 && num <= 100) {
-            sentimentFill.style.width = num + "%"
-        }
-    }
-}
-
-async function turn(side, humanInput = null) {
-    if (!running) return
-    let msg
-    if (humanInput) {
-        msg = humanInput
-    } else {
-        addTyping()
-        msg = await call(side === "a" ? histA : histB)
-        removeTyping()
-        if (!msg) return
-    }
-    
-    addMsg(side, msg, roundLabel(exchanges))
-    history.push((side === "a" ? "PRO" : "CON") + ": " + msg)
-    
-    histA.push({ role: side === "a" ? "assistant" : "user", content: msg })
-    histB.push({ role: side === "b" ? "assistant" : "user", content: msg })
-}
-
-function getHumanResponse() {
-    return new Promise((resolve) => {
-        inputBar.style.display = "block"
-        humanInputField.focus()
-        const handleSend = () => {
-            const val = humanInputField.value.trim()
-            if (val) {
-                inputBar.style.display = "none"
-                humanInputField.value = ""
-                sendBtn.removeEventListener("click", handleSend)
-                resolve(val)
-            }
-        }
-        sendBtn.addEventListener("click", handleSend)
-        humanInputField.onkeydown = (e) => { if (e.key === "Enter") handleSend() }
-    })
-}
-
-chaosBtn.onclick = async () => {
-    if (!running) return
-    chaosBtn.disabled = true
-    statusEl.textContent = "injecting chaos..."
-    const twistPrompt = "Generate a wild, unexpected 1-sentence plot twist or new fake fact for the debate topic: " + topicInput.value.trim()
-    const temp = [{ role: "user", content: twistPrompt }]
-    const twist = await call(temp)
-    if (twist) {
-        addMsg("judge", "GRENADE: " + twist, "PLOT TWIST")
-        history.push("SYSTEM PLOT TWIST: " + twist)
-        histA.push({ role: "system", content: "NEW CONDITION: " + twist + " Address this immediately." })
-        histB.push({ role: "system", content: "NEW CONDITION: " + twist + " Address this immediately." })
-    }
-    chaosBtn.disabled = false
-    statusEl.textContent = "debate continuing"
-}
-
-exportBtn.onclick = () => {
-    if (history.length === 0) return
-    let text = "VEXA DEBATE TRANSCRIPT\nTopic: " + topicInput.value + "\n\n"
-    text += history.join("\n\n")
-    navigator.clipboard.writeText(text)
-    const prev = exportBtn.textContent
-    exportBtn.textContent = "COPIED!"
-    setTimeout(() => exportBtn.textContent = prev, 2000)
-}
-
-async function run() {
-    const topic = topicInput.value.trim()
-    if (!topic) { statusEl.textContent = "enter topic first"; return; }
-
-    chat.innerHTML = ""
-    histA = []; histB = []; history = []
-    exchanges = 0
-    running = true
-    abortController = new AbortController()
-    
-    startBtn.disabled = true
-    stopBtn.disabled = false
-    chaosBtn.style.display = "block"
-    exportBtn.style.display = "none"
-    sentimentWrap.style.display = "block"
-    sentimentFill.style.width = "50%"
-    
-    const stylePrompt = style === "custom" ? customStyle.value : STYLES[style]
-    histA = [{ role: "system", content: "Topic: " + topic + ". You AGREE. Style: " + stylePrompt + ". Keep responses extremely concise." }]
-    histB = [{ role: "system", content: "Topic: " + topic + ". You DISAGREE. Style: " + stylePrompt + ". Keep responses extremely concise." }]
-
-    while (running && exchanges < LENGTHS[length]) {
-        if (mode === "human-ai") {
-            statusEl.textContent = "your turn (PRO)"
-            const humanMsg = await getHumanResponse()
-            if (!running) break
-            await turn("a", humanMsg)
-        } else {
-            statusEl.textContent = "AI (PRO) typing..."
-            await turn("a")
-        }
-        if (!running) break
-        exchanges++
-        
-        if (exchanges >= LENGTHS[length]) break
-
-        statusEl.textContent = "AI (CON) typing..."
-        await turn("b")
-        if (!running) break
-        exchanges++
-        
-        updateSentiment()
-    }
-
-    if (running) {
-        running = false
-        chaosBtn.style.display = "none"
-        statusEl.textContent = "debate finished. judging..."
-        const judgePrompt = JUDGES[judge]
-        const winPrompt = "Debate over. Topic: " + topic + "\n" + history.join("\n") + "\nAct as a " + judgePrompt + ". Pick a winner and give a 1-sentence reason."
-        const result = await call([{ role: "user", content: winPrompt }])
-        if (result) {
-            addMsg("judge", result, "FINAL VERDICT")
-            statusEl.textContent = "done"
-        }
-    }
-    
-    exportBtn.style.display = "block"
-    startBtn.disabled = false
-    stopBtn.disabled = true
-}
-
-startBtn.onclick = run
-stopBtn.onclick = () => { 
-    running = false
-    if (abortController) abortController.abort()
-    statusEl.textContent = "stopped"
-    startBtn.disabled = false
-    stopBtn.disabled = true
-    inputBar.style.display = "none"
-    chaosBtn.style.display = "none"
-    exportBtn.style.display = "block"
-    removeTyping()
-}
-randomBtn.onclick = randomTopic
-topicInput.addEventListener('keydown', (e) => { if(e.key === 'Enter' && !running) run() })
-
-function setupDropdown(btn, menu, setFunc) {
-    btn.onclick = (e) => { e.stopPropagation(); menu.style.display = menu.style.display === "flex" ? "none" : "flex" }
-    menu.querySelectorAll("div").forEach(opt => {
-        opt.onclick = () => {
-            const val = opt.dataset.value || opt.dataset.style || opt.dataset.mode || opt.dataset.length || opt.dataset.judge
-            setFunc(val)
-            menu.style.display = "none"
-            btn.textContent = opt.textContent + " ▾"
-            if (opt.dataset.style) customWrap.style.display = (opt.dataset.style === "custom") ? "block" : "none"
-        }
-    })
-}
-document.addEventListener("click", () => {
-    [styleMenu, modeMenu, lengthMenu, judgeMenu].forEach(m => m.style.display = "none")
-})
-setupDropdown(styleBtn, styleMenu, v => style = v)
-setupDropdown(modeBtn, modeMenu, v => mode = v)
-setupDropdown(lengthBtn, lengthMenu, v => length = v)
-setupDropdown(judgeBtn, judgeMenu, v => judge = v)
-</script>
+    <script src="scripts/index.js"></script>
 </body>
+
 </html>
